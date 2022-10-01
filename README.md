@@ -9,7 +9,7 @@ SourceCity, SourceCountry
 DestinationCity, DestinationCountry
 
 
-The lines must have a whitespace in between the comma and the source country. 
+The lines must have a whitespace in between the comma and the source country. The names should also be written in titlecase.
 
 After, one must call the readAllFiles method in the FileReader class. 
 Next, create an instance of the FindRoute class and call the method writeOutputToFile. 
