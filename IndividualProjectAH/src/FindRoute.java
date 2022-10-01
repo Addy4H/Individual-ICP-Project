@@ -8,6 +8,7 @@ import java.io.FileNotFoundException;
  * algorithm
  */
 public class FindRoute {
+    // retrieving access to attributes created in the FileReader class
     public HashMap<String, ArrayList<Route>> routeMap = FileReader.routeMap;
     public HashMap<String, ArrayList<Airport>> airportMap = FileReader.airportMap;
     public HashMap<String, String> airportCountryDict = FileReader.airportsToCountries;
@@ -69,6 +70,7 @@ public class FindRoute {
         if (airportCountryDict.containsValue(source)) {
             ArrayList<Airport> airports = airportMap.get(source);
 
+            // for all available airports in the source city and country, create a root node (source airport)
             for (Airport airport: airports){
                 frontier.add(new Node(airport));
             }
@@ -78,22 +80,24 @@ public class FindRoute {
 
         while(!frontier.isEmpty()){
             Node curr_node = frontier.remove();
-            explored.add(curr_node.getState());
-            ArrayList<Route> actions = actions(curr_node.getState());
+            explored.add(curr_node.getState()); // after exploring a node, it is added to this set
+            ArrayList<Route> actions = actions(curr_node.getState()); //possible routes that can be travelled from the airport
 
             for(Route route : actions){
                 if(iataAirportDict.get(route.getDestinationAirportCode()) == null){
                     continue;
                 }
-                // generating children nodes
+                // generating child nodes (destination airports) if they exist
                 Node childNode = new Node(iataAirportDict.get(route.getDestinationAirportCode()),
                         curr_node, route,curr_node.getPathCost()+1);
 
                 if(!explored.contains(childNode.getState()) && !frontier.contains(childNode)){
+                   //checking if the child Node is a goal once it is generated
                     if(isGoal(childNode.getState())){
                         pathCost = childNode.getPathCost();
                         return childNode.solutionPath(); // returns a list of route objects
                         }
+                    // add child Node to the frontier to generate destination nodes
                     frontier.add(childNode);
                     }
                 }
