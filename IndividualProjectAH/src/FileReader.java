@@ -170,8 +170,10 @@ public class FileReader {
             fnfe.printStackTrace();
             fnfe.getMessage();
         }
-        sourceInfo = inputStream.nextLine();
-        destinationInfo = inputStream.nextLine();
+        String[] source = inputStream.nextLine().split(",");
+        String[] destination = inputStream.nextLine().split(",");
+        sourceInfo = source[0].trim()+", "+source[1].trim();
+        destinationInfo = destination[0].trim()+", "+destination[1].trim();
     }
 
     /**
